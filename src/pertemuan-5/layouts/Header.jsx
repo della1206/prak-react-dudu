@@ -7,7 +7,7 @@ export default function Header() {
         <div className="flex justify-between items-center p-6 bg-transparent">
             <div className="relative w-full max-w-lg">
                 <input
-                    className="border-none p-3 pr-10 bg-white w-full rounded-xl shadow-sm outline-none"
+                    className="border-none p-3 pr-10 bg-white w-full rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-hijau transition-all"
                     type="text"
                     placeholder="Search Here..."
                 />
@@ -15,10 +15,15 @@ export default function Header() {
             </div>
 
             <div className="flex items-center space-x-4">
+                {/* Lonceng dengan Animasi Ping */}
                 <div className="relative p-3 bg-blue-100 rounded-2xl text-blue-500 cursor-pointer">
                     <FaBell />
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white rounded-full px-1.5 py-0.5 text-[10px]">50</span>
+                    <span className="absolute top-2 right-2 h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500 border-2 border-white"></span>
+                    </span>
                 </div>
+                
                 <div className="p-3 bg-blue-100 rounded-2xl cursor-pointer text-blue-500"><FcAreaChart /></div>
                 <div className="p-3 bg-red-100 rounded-2xl text-red-500 cursor-pointer"><SlSettings /></div>
 
@@ -30,4 +35,3 @@ export default function Header() {
         </div>
     );
 }
-

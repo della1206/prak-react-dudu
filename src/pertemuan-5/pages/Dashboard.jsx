@@ -9,9 +9,25 @@ export default function Dashboard() {
 
             {/* 3️⃣ Terapkan layout dan flexbox di dashboard-grid */}
             <div id="dashboard-grid" className="p-5 grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                </div>
+                {/* Komponen Baru: Tabel Recent Orders */}
+                <div className="mt-8 p-6 bg-white rounded-2xl shadow-sm mx-5">
+                    <h2 className="text-xl font-bold mb-4">Recent Orders</h2>
+                    <table className="w-full text-left">
+                        <tr className="text-gray-400 border-b text-sm">
+                            <th className="pb-3">Customer</th>
+                            <th className="pb-3">Status</th>
+                        </tr>
+                        <tr className="border-b">
+                            <td className="py-3 font-medium">Della Marcelina</td>
+                            <td><span className="text-hijau bg-green-100 px-3 py-1 rounded-full text-xs">Completed</span></td>
+                        </tr>
+                    </table>
+                </div>
                 
                 {/* 4️⃣ Styling Card Count - Total Orders */}
-                <div id="dashboard-orders" className="flex items-center space-x-5 bg-white rounded-lg shadow-md p-4">
+                <div id="dashboard-orders" className="flex items-center space-x-5 bg-white rounded-lg shadow-md p-4 transition-all 
+                duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
                     <div id="orders-icon" className="bg-hijau rounded-full p-4 text-3xl text-white">
                         <FaShoppingCart />
                     </div>
@@ -55,6 +71,5 @@ export default function Dashboard() {
                 </div>
 
             </div>
-        </div>
     );
 }
