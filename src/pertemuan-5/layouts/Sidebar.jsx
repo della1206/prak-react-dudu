@@ -35,7 +35,7 @@ export default function Sidebar() {
                     <img className="w-16 h-16 rounded-full object-cover" src="/img/avatar.png" alt="avatar" />
                 </div>
                 <span className="font-bold text-gray-400 block text-sm">Sedap Restaurant Admin</span>
-                <p className="font-light text-gray-400 text-xs"> 2025 All Right Reserved</p>
+                <p className="font-light text-gray-400 text-xs"> @2025 All Right Reserved</p>
             </div>
         </div>
     );
