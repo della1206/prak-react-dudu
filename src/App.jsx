@@ -1,17 +1,31 @@
 import "./assets/tailwind.css";
 import { Route, Routes } from "react-router-dom";
-import Orders from "./pages/Orders";
-import Customers from "./pages/Customers";
-import Dashboard from "./pages/Dashboard";
-import ErrorPage from "./pages/ErrorPage"; 
-import MainLayout from "./layouts/MainLayout";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Forgot from "./pages/auth/Forgot";
-import AuthLayout from "./layouts/AuthLayout";
+import React, { Suspense } from "react";
+import Loading from "./components/Loading";
+//import Orders from "./pages/Orders";
+//import Customers from "./pages/Customers";
+//import Dashboard from "./pages/Dashboard";
+//import ErrorPage from "./pages/ErrorPage"; 
+//import MainLayout from "./layouts/MainLayout";
+//import Login from "./pages/auth/Login";
+//import Register from "./pages/auth/Register";
+//import Forgot from "./pages/auth/Forgot";
+//import AuthLayout from "./layouts/AuthLayout";
+
+const Dashboard = React.lazy(() => import("./pages/Dashboard"))
+const Orders = React.lazy(() => import("./pages/Orders"))
+const Customers = React.lazy(() => import("./pages/Customers"))
+const ErrorPage = React.lazy(() => import("./pages/ErrorPage"))
+const MainLayout = React.lazy(() => import("./layouts/MainLayout"))
+const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"))
+const Login = React.lazy(() => import("./pages/auth/Login"))
+const Register = React.lazy(() => import("./pages/auth/Register"))
+const Forgot = React.lazy(() => import("./pages/auth/Forgot"))
+
 
 function App() {
   return (
+    	<Suspense fallback={<Loading />}>
     <Routes>
       {/* Wrapper Layout */}
       <Route element={<MainLayout />}> 
@@ -20,11 +34,6 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/customers" element={<Customers />} />
 
-         <Route element={<AuthLayout/>}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/forgot" element={<Forgot/>} />
-        </Route>
 
         {/* Specific Error Routes */}
         <Route
@@ -76,7 +85,13 @@ function App() {
           }
         />
       </Route>
+       <Route element={<AuthLayout/>}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register/>} />
+            <Route path="/forgot" element={<Forgot/>} />
+        </Route>
     </Routes>
+    </Suspense>
   );
 }
 
