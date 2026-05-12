@@ -45,6 +45,14 @@ export default function Sidebar() {
                 Customer
               </NavLink>
             </li>
+              {/* MENU PRODUCTS */}
+               <li>
+              <NavLink to="/products" className={menuClass}>
+                <MdPeople className="mr-4 text-xl" />
+                Products
+              </NavLink>
+            </li>
+
 
             {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
             <div className="pt-4 pb-2">
