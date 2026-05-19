@@ -1,4 +1,4 @@
-import { MdSpaceDashboard, MdListAlt, MdPeople, MdReportProblem, MdLockPerson, MdBlock } from "react-icons/md"; 
+import { MdSpaceDashboard, MdListAlt, MdPeople, MdReportProblem, MdLockPerson, MdBlock, MdExtension } from "react-icons/md"; 
 import { FaPlus } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 
@@ -45,14 +45,22 @@ export default function Sidebar() {
                 Customer
               </NavLink>
             </li>
-              {/* MENU PRODUCTS */}
-               <li>
+
+            {/* MENU PRODUCTS */}
+            <li>
               <NavLink to="/products" className={menuClass}>
                 <MdPeople className="mr-4 text-xl" />
                 Products
               </NavLink>
             </li>
 
+            {/* MENU COMPONENTS (Tambahan Modul Pertemuan 10) */}
+            <li>
+              <NavLink to="/components" className={menuClass}>
+                <MdExtension className="mr-4 text-xl" />
+                Components
+              </NavLink>
+            </li>
 
             {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
             <div className="pt-4 pb-2">

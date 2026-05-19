@@ -16,6 +16,8 @@ const Register = React.lazy(() => import("./pages/auth/Register"));
 const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
 // 1️⃣ Import Lazy untuk ProductDetail
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
+// 2️⃣ Menambahkan Lazy Load untuk halaman Components.jsx sesuai modul 10
+const ComponentsPage = React.lazy(() => import("./pages/Components"));
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/products" element={<Products />} />
           {/* Route baru untuk detail produk */}
           <Route path="/products/:id" element={<ProductDetail />} />
+          {/* Route baru untuk halaman playground components */}
+          <Route path="/components" element={<ComponentsPage />} />
         </Route>
 
         {/* Wrapper Auth Layout */}
