@@ -1,22 +1,36 @@
-import { MdSpaceDashboard, MdListAlt, MdPeople, MdReportProblem, MdLockPerson, MdBlock, MdExtension } from "react-icons/md"; 
+import {
+  MdSpaceDashboard,
+  MdListAlt,
+  MdPeople,
+  MdReportProblem,
+  MdLockPerson,
+  MdBlock,
+  MdExtension,
+} from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-    const menuClass = ({ isActive }) =>
-        `flex cursor-pointer items-center rounded-xl p-4 space-x-2
-        ${isActive ? 
-            "text-hijau bg-green-200 font-extrabold" : 
-            "text-gray-600 hover:text-hijau hover:bg-green-200 hover:font-extrabold"
-        }`
+  const menuClass = ({ isActive }) =>
+    `flex cursor-pointer items-center rounded-xl p-4 space-x-2
+        ${
+          isActive
+            ? "text-hijau bg-green-200 font-extrabold"
+            : "text-gray-600 hover:text-hijau hover:bg-green-200 hover:font-extrabold"
+        }`;
 
   return (
-    <div id="sidebar" className="flex min-h-screen w-[360px] flex-col bg-white p-10 shadow-lg">
+    <div
+      id="sidebar"
+      className="flex min-h-screen w-[360px] flex-col bg-white p-10 shadow-lg"
+    >
       <div id="sidebar-logo" className="flex flex-col">
         <span className="font-poppins text-[48px] text-gray-900">
           Sedap <b className="text-hijau">.</b>
         </span>
-        <span className="font-semibold text-gray-400">Modern Admin Dashboard</span>
+        <span className="font-semibold text-gray-400">
+          Modern Admin Dashboard
+        </span>
       </div>
 
       <div className="mt-10">
@@ -62,10 +76,19 @@ export default function Sidebar() {
               </NavLink>
             </li>
 
+            <li>
+              <NavLink to="/fitur-xyz" className={menuClass}>
+                <MdExtension className="mr-4 text-xl" />
+                Fitur XYZ
+              </NavLink>
+            </li>
+
             {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
             <div className="pt-4 pb-2">
-                <hr className="border-gray-100" />
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Error Pages</span>
+              <hr className="border-gray-100" />
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                Error Pages
+              </span>
             </div>
 
             {/* MENU ERROR 400 */}
@@ -94,7 +117,6 @@ export default function Sidebar() {
           </ul>
         </div>
       </div>
-      
 
       <div className="mt-auto">
         <div className="bg-hijau px-4 py-4 rounded-2xl shadow-lg mb-10 flex items-center justify-between">
@@ -104,10 +126,19 @@ export default function Sidebar() {
               <FaPlus className="mr-2" /> Add Menus
             </button>
           </div>
-          <img className="w-16 h-16 rounded-full object-cover" src="/img/avatar.png" alt="avatar" />
+          <img
+            className="w-16 h-16 rounded-full object-cover"
+            src="/img/avatar.png"
+            alt="avatar"
+          />
         </div>
-        <span className="font-bold text-gray-400 block text-sm">Sedap Restaurant Admin</span>
-        <p className="font-light text-gray-400 text-xs"> @2026 All Right Reserved</p>
+        <span className="font-bold text-gray-400 block text-sm">
+          Sedap Restaurant Admin
+        </span>
+        <p className="font-light text-gray-400 text-xs">
+          {" "}
+          @2026 All Right Reserved
+        </p>
       </div>
     </div>
   );

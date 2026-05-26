@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import Loading from "./components/Loading";
 
-// Lazy Loading Components
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Orders = React.lazy(() => import("./pages/Orders"));
 const Customers = React.lazy(() => import("./pages/Customers"));
@@ -14,10 +13,9 @@ const AuthLayout = React.lazy(() => import("./layouts/AuthLayout"));
 const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
 const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
-// 1️⃣ Import Lazy untuk ProductDetail
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
-// 2️⃣ Menambahkan Lazy Load untuk halaman Components.jsx sesuai modul 10
 const ComponentsPage = React.lazy(() => import("./pages/Components"));
+const FiturXyz = React.lazy(() => import("./pages/FiturXyz"));
 
 function App() {
   return (
@@ -33,6 +31,7 @@ function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           {/* Route baru untuk halaman playground components */}
           <Route path="/components" element={<ComponentsPage />} />
+          <Route path="/fitur-xyz" element={<FiturXyz />} /> {/* Route untuk Fitur XYZ */}
         </Route>
 
         {/* Wrapper Auth Layout */}
