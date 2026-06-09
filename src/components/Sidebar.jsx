@@ -83,6 +83,13 @@ export default function Sidebar() {
               </NavLink>
             </li>
 
+            <li>
+              <NavLink to="/notes" className={menuClass}>
+                <MdListAlt className="mr-4 text-xl" />
+                Notes
+              </NavLink>
+            </li>
+
             {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
             <div className="pt-4 pb-2">
               <hr className="border-gray-100" />

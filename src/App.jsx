@@ -16,6 +16,7 @@ const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const ComponentsPage = React.lazy(() => import("./pages/Components"));
 const FiturXyz = React.lazy(() => import("./pages/FiturXyz"));
+const Notes = React.lazy(() => import("./pages/Notes"));
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           {/* Route baru untuk halaman playground components */}
           <Route path="/components" element={<ComponentsPage />} />
-          <Route path="/fitur-xyz" element={<FiturXyz />} /> {/* Route untuk Fitur XYZ */}
+          <Route path="/fitur-xyz" element={<FiturXyz />} /> 
+          <Route path="/notes" element={<Notes />} /> 
         </Route>
 
         {/* Wrapper Auth Layout */}
