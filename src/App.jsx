@@ -2,6 +2,7 @@ import "./assets/tailwind.css";
 import { Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import Loading from "./components/Loading";
+import AdminRoute from "./components/AdminRoute";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Orders = React.lazy(() => import("./pages/Orders"));
@@ -24,16 +25,20 @@ function App() {
       <Routes>
         {/* Wrapper Main Layout */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/products" element={<Products />} />
-          {/* Route baru untuk detail produk */}
-          <Route path="/products/:id" element={<ProductDetail />} />
-          {/* Route baru untuk halaman playground components */}
-          <Route path="/components" element={<ComponentsPage />} />
-          <Route path="/fitur-xyz" element={<FiturXyz />} /> 
-          <Route path="/notes" element={<Notes />} /> 
+          <Route element={<AdminRoute allowedRoles={["admin", "member"]} />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/orders" element={<Orders />} />
+          </Route>
+          <Route element={<AdminRoute allowedRoles={["admin"]} />}>
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/products" element={<Products />} />
+            {/* Route baru untuk detail produk */}
+            <Route path="/products/:id" element={<ProductDetail />} />
+            {/* Route baru untuk halaman playground components */}
+            <Route path="/components" element={<ComponentsPage />} />
+            <Route path="/fitur-xyz" element={<FiturXyz />} /> 
+            <Route path="/notes" element={<Notes />} /> 
+          </Route>
         </Route>
 
         {/* Wrapper Auth Layout */}

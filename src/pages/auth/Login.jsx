@@ -1,8 +1,8 @@
-import axios from "axios"
 import { useState } from "react"
 import { BsFillExclamationDiamondFill } from "react-icons/bs"
 import { ImSpinner2 } from "react-icons/im"
 import { useNavigate } from "react-router-dom"
+import { supabase } from "../../lib/supabaseClient"
 
 export default function Login() {
     /* navigate, state & handleChange*/
@@ -27,33 +27,21 @@ export default function Login() {
 		        e.preventDefault()
 		
 		        setLoading(true)
-		        setError(false)
+		        setError("")
 		
-            axios
-		            .post("https://dummyjson.com/user/login", {
-		                username: dataForm.email,
-		                password: dataForm.password,
-		            })
-		            .then((response) => {
-		                // Jika status bukan 200, tampilkan pesan error
-		                if (response.status !== 200) {
-		                    setError(response.data.message);
-		                    return; 
-		                }
-		
-		                // Redirect ke dashboard jika login sukses
-		                navigate("/");
-		            })
-		            .catch((err) => {
-		                if (err.response) {
-		                    setError(err.response.data.message || "An error occurred");
-		                } else {
-		                    setError(err.message || "An unknown error occurred");
-		                }
-		            })
-		            .finally(() => {
-		                setLoading(false); 
-		            });
+            const { error } = await supabase.auth.signInWithPassword({
+                email: dataForm.email,
+                password: dataForm.password,
+            })
+
+            if (error) {
+                setError(error.message)
+                setLoading(false)
+                return
+            }
+
+            setLoading(false)
+            navigate("/")
                 }
     	
 		/* error & loading status */

@@ -1,7 +1,57 @@
 import { FaShoppingCart, FaTruck, FaBan, FaDollarSign } from "react-icons/fa";
 import PageHeader from "../components/PageHeader";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Dashboard() {
+  const { isAdmin, profile } = useAuth();
+  const [stats, setStats] = useState({
+    orders: 0,
+    points: 0,
+    tier: "bronze",
+    revenue: 0,
+    lastStatus: "pending",
+  });
+  const [recentOrders, setRecentOrders] = useState([]);
+  const statusStyles = {
+    pending: "bg-yellow-100 text-yellow-700",
+    success: "bg-green-100 text-green-700",
+    cancelled: "bg-red-100 text-red-700",
+  };
+
+  useEffect(() => {
+    loadDashboard();
+  }, [isAdmin, profile]);
+
+  const loadDashboard = async () => {
+    const [{ count: orders }, { count: members }, { data: orderRows }] = await Promise.all([
+      supabase.from("orders").select("id", { count: "exact", head: true }),
+      isAdmin
+        ? supabase.from("profiles").select("id", { count: "exact", head: true }).eq("role", "member")
+        : Promise.resolve({ count: profile?.total_points || 0 }),
+      supabase
+        .from("orders")
+        .select("id, status, total_final, created_at, profiles(full_name)")
+        .order("created_at", { ascending: false })
+        .limit(5),
+    ]);
+
+    const revenue = (orderRows || []).reduce(
+      (total, order) => total + Number(order.total_final || 0),
+      0
+    );
+
+    setStats({
+      orders: orders || 0,
+      points: members || 0,
+      tier: profile?.tier || "bronze",
+      revenue,
+      lastStatus: orderRows?.[0]?.status || "pending",
+    });
+    setRecentOrders(orderRows || []);
+  };
+
   return (
     <div id="dashboard-container" className="bg-gray-50 min-h-screen">
       {/* 1. Header */}
@@ -17,7 +67,7 @@ export default function Dashboard() {
               <FaShoppingCart />
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold text-gray-800">75</span>
+              <span className="text-3xl font-bold text-gray-800">{stats.orders}</span>
               <span className="text-gray-400 font-medium">Total Orders</span>
             </div>
           </div>
@@ -28,8 +78,8 @@ export default function Dashboard() {
               <FaTruck />
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold text-gray-800">357</span>
-              <span className="text-gray-400 font-medium">Total Delivered</span>
+              <span className="text-3xl font-bold text-gray-800">{stats.points}</span>
+              <span className="text-gray-400 font-medium">{isAdmin ? "Total Members" : "My Points"}</span>
             </div>
           </div>
 
@@ -39,8 +89,8 @@ export default function Dashboard() {
               <FaBan />
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold text-gray-800">65</span>
-              <span className="text-gray-400 font-medium">Total Canceled</span>
+              <span className="text-3xl font-bold text-gray-800 capitalize">{stats.tier}</span>
+              <span className="text-gray-400 font-medium">{isAdmin ? "Current Tier" : "My Tier"}</span>
             </div>
           </div>
 
@@ -50,8 +100,10 @@ export default function Dashboard() {
               <FaDollarSign />
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold text-gray-800">$128</span>
-              <span className="text-gray-400 font-medium">Total Revenue</span>
+              <span className="text-3xl font-bold text-gray-800 capitalize">
+                {isAdmin ? `Rp ${stats.revenue.toLocaleString("id-ID")}` : stats.lastStatus}
+              </span>
+              <span className="text-gray-400 font-medium">{isAdmin ? "Total Revenue" : "Last Order"}</span>
             </div>
           </div>
         </div>
@@ -73,24 +125,28 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                <tr className="hover:bg-gray-50 transition-colors">
-                  <td className="py-4 font-semibold text-gray-700">Della Marcelina</td>
-                  <td className="py-4 text-center">
-                    <span className="bg-green-100 text-green-600 px-4 py-1 rounded-full text-xs font-bold uppercase">
-                      Completed
-                    </span>
-                  </td>
-                  <td className="py-4 text-right font-bold text-gray-800">$45.00</td>
-                </tr>
-                <tr className="hover:bg-gray-50 transition-colors">
-                  <td className="py-4 font-semibold text-gray-700">Samantha Smith</td>
-                  <td className="py-4 text-center">
-                    <span className="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-xs font-bold uppercase">
-                      Pending
-                    </span>
-                  </td>
-                  <td className="py-4 text-right font-bold text-gray-800">$12.50</td>
-                </tr>
+                {recentOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="py-4 font-semibold text-gray-700">
+                      {order.profiles?.full_name || "Member"}
+                    </td>
+                    <td className="py-4 text-center">
+                      <span className={`${statusStyles[order.status] || statusStyles.pending} px-4 py-1 rounded-full text-xs font-bold uppercase`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-4 text-right font-bold text-gray-800">
+                      Rp {Number(order.total_final || 0).toLocaleString("id-ID")}
+                    </td>
+                  </tr>
+                ))}
+                {recentOrders.length === 0 && (
+                  <tr>
+                    <td className="py-4 text-center text-gray-400" colSpan="3">
+                      Belum ada pesanan.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

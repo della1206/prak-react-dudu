@@ -8,9 +8,12 @@ import {
   MdExtension,
 } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Sidebar() {
+  const { isAdmin } = useAuth();
+
   const menuClass = ({ isActive }) =>
     `flex cursor-pointer items-center rounded-xl p-4 space-x-2
         ${
@@ -53,74 +56,88 @@ export default function Sidebar() {
             </li>
 
             {/* MENU CUSTOMERS */}
-            <li>
-              <NavLink to="/customers" className={menuClass}>
-                <MdPeople className="mr-4 text-xl" />
-                Customer
-              </NavLink>
-            </li>
+            {isAdmin && (
+              <li>
+                <NavLink to="/customers" className={menuClass}>
+                  <MdPeople className="mr-4 text-xl" />
+                  Customer
+                </NavLink>
+              </li>
+            )}
 
             {/* MENU PRODUCTS */}
-            <li>
-              <NavLink to="/products" className={menuClass}>
-                <MdPeople className="mr-4 text-xl" />
-                Products
-              </NavLink>
-            </li>
+            {isAdmin && (
+              <li>
+                <NavLink to="/products" className={menuClass}>
+                  <MdPeople className="mr-4 text-xl" />
+                  Products
+                </NavLink>
+              </li>
+            )}
 
             {/* MENU COMPONENTS (Tambahan Modul Pertemuan 10) */}
-            <li>
-              <NavLink to="/components" className={menuClass}>
-                <MdExtension className="mr-4 text-xl" />
-                Components
-              </NavLink>
-            </li>
+            {isAdmin && (
+              <li>
+                <NavLink to="/components" className={menuClass}>
+                  <MdExtension className="mr-4 text-xl" />
+                  Components
+                </NavLink>
+              </li>
+            )}
 
-            <li>
-              <NavLink to="/fitur-xyz" className={menuClass}>
-                <MdExtension className="mr-4 text-xl" />
-                Fitur XYZ
-              </NavLink>
-            </li>
+            {isAdmin && (
+              <li>
+                <NavLink to="/fitur-xyz" className={menuClass}>
+                  <MdExtension className="mr-4 text-xl" />
+                  Fitur XYZ
+                </NavLink>
+              </li>
+            )}
 
-            <li>
-              <NavLink to="/notes" className={menuClass}>
-                <MdListAlt className="mr-4 text-xl" />
-                Notes
-              </NavLink>
-            </li>
+            {isAdmin && (
+              <li>
+                <NavLink to="/notes" className={menuClass}>
+                  <MdListAlt className="mr-4 text-xl" />
+                  Notes
+                </NavLink>
+              </li>
+            )}
 
-            {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
-            <div className="pt-4 pb-2">
-              <hr className="border-gray-100" />
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                Error Pages
-              </span>
-            </div>
+            {isAdmin && (
+              <>
+                {/* --- SEPARATOR UNTUK ERROR TESTING --- */}
+                <div className="pt-4 pb-2">
+                  <hr className="border-gray-100" />
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    Error Pages
+                  </span>
+                </div>
 
-            {/* MENU ERROR 400 */}
-            <li>
-              <NavLink to="/error-400" className={menuClass}>
-                <MdReportProblem className="mr-4 text-xl text-orange-400" />
-                Error 400
-              </NavLink>
-            </li>
+                {/* MENU ERROR 400 */}
+                <li>
+                  <NavLink to="/error-400" className={menuClass}>
+                    <MdReportProblem className="mr-4 text-xl text-orange-400" />
+                    Error 400
+                  </NavLink>
+                </li>
 
-            {/* MENU ERROR 401 */}
-            <li>
-              <NavLink to="/error-401" className={menuClass}>
-                <MdLockPerson className="mr-4 text-xl text-red-400" />
-                Error 401
-              </NavLink>
-            </li>
+                {/* MENU ERROR 401 */}
+                <li>
+                  <NavLink to="/error-401" className={menuClass}>
+                    <MdLockPerson className="mr-4 text-xl text-red-400" />
+                    Error 401
+                  </NavLink>
+                </li>
 
-            {/* MENU ERROR 403 */}
-            <li>
-              <NavLink to="/error-403" className={menuClass}>
-                <MdBlock className="mr-4 text-xl text-red-600" />
-                Error 403
-              </NavLink>
-            </li>
+                {/* MENU ERROR 403 */}
+                <li>
+                  <NavLink to="/error-403" className={menuClass}>
+                    <MdBlock className="mr-4 text-xl text-red-600" />
+                    Error 403
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
