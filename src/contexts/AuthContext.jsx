@@ -47,6 +47,12 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+    setProfile(null);
+  };
+
   const value = useMemo(
     () => ({
       session,
@@ -54,6 +60,7 @@ export function AuthProvider({ children }) {
       profile,
       loading,
       isAdmin: profile?.role === "admin",
+      signOut,
     }),
     [session, profile, loading]
   );
